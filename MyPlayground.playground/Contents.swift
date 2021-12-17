@@ -1,5 +1,6 @@
 import Foundation
 
+@dynamicMemberLookup
 enum JSON {
     case int(Int)
     case string(String)
@@ -101,7 +102,7 @@ extension JSON {
         return nil
     }
     
-    subscript(key: String) -> JSON? {
+    subscript(dynamicMember key: String) -> JSON? {
         if case .dictionary(let dict) = self {
             return dict[key]
         }
@@ -142,8 +143,8 @@ func jsonData() -> Data? {
 }
 
 if let data = jsonData(), let json = JSON(data: data) {
-    let name = json[0]?["name"]?.stringValue
+    let name = json[0]?.name?.stringValue
     print("name: ", name)
-    let city = json[0]?["address"]?["city"]?.stringValue
+    let city = json[0]?.address?.city?.stringValue
     print("city: ", city)
 }
