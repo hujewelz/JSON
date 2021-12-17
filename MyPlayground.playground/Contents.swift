@@ -64,3 +64,47 @@ extension JSON {
         self = .dictionary(dict)
     }
 }
+
+extension JSON {
+    var intValue: Int? {
+        if case .int(let aInt) = self {
+            return aInt
+        }
+        return nil
+    }
+    
+    var stringValue: String? {
+        if case .string(let str) = self {
+            return str
+        }
+        return nil
+    }
+    
+    var arrayValue: [JSON]? {
+        if case .array(let arr) = self {
+            return arr
+        }
+        return nil
+    }
+    
+    var dictionaryValue: Dictionary<String, JSON>? {
+        if case .dictionary(let dict) = self {
+            return dict
+        }
+        return nil
+    }
+    
+    subscript(index: Int) -> JSON? {
+        if case .array(let arr) = self {
+            return index < arr.count ? arr[index] : nil
+        }
+        return nil
+    }
+    
+    subscript(key: String) -> JSON? {
+        if case .dictionary(let dict) = self {
+            return dict[key]
+        }
+        return nil
+    }
+}
